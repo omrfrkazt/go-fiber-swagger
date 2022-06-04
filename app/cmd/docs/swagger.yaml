@@ -1,0 +1,86 @@
+definitions:
+  main.LoginModel:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  main.UserModel:
+    properties:
+      address:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Fiber-Swagger API
+  title: Fiber-Swagger API
+  version: 0.99dev
+paths:
+  /api/Login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Login
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/main.LoginModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login Successful
+      summary: Login
+  /api/Ping:
+    get:
+      responses:
+        "200":
+          description: pong
+      summary: Ping Me!
+  /api/Secret:
+    get:
+      responses:
+        "200":
+          description: Hello Boss
+      security:
+      - BasicAuth: []
+      summary: Secret
+  /api/user/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.UserModel'
+        "404":
+          description: User Not Found
+      summary: Get User By Id
+securityDefinitions:
+  BasicAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
